@@ -71,7 +71,6 @@ FileEdit::FileEdit(QWidget *parent)
 
 void FileEdit::setFileUrl(const QUrl &url)
 {
-    qDebug() << "[setFileUrl]" << url.path();
     if (mLineEdit->text() != url.path())
         mLineEdit->setText(url.path());
 }
