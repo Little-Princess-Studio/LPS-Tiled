@@ -1195,10 +1195,10 @@ void MapDocument::setSelectedObjects(const QList<MapObject *> &selectedObjects)
 
     // Make sure the current object is one of the selected ones
     if (!selectedObjects.isEmpty()) {
-        if (currentObject() && currentObject()->typeId() == Object::MapObjectType) {
-            if (selectedObjects.contains(static_cast<MapObject*>(currentObject())))
-                return;
-        }
+//        if (currentObject() && currentObject()->typeId() == Object::MapObjectType) {
+//            if (selectedObjects.contains(static_cast<MapObject*>(currentObject())))
+//                return;
+//        }
 
         setCurrentObject(selectedObjects.first());
     }
