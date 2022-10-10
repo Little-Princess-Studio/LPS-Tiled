@@ -52,6 +52,8 @@ public slots:
 protected:
     bool event(QEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private:
     void currentObjectChanged(Object *object);

@@ -34,6 +34,7 @@
 class QAction;
 class QKeyEvent;
 class QMenu;
+class QMimeData;
 
 namespace Tiled {
 namespace Utils {
@@ -94,6 +95,8 @@ QSize smallIconSize();
 bool isZoomInShortcut(QKeyEvent *event);
 bool isZoomOutShortcut(QKeyEvent *event);
 bool isResetZoomShortcut(QKeyEvent *event);
+
+bool isJScriptFile(const QMimeData* mimeData);
 
 void addFileManagerActions(QMenu &menu, const QString &fileName);
 void addOpenContainingFolderAction(QMenu &menu, const QString &fileName);

@@ -89,6 +89,9 @@ PropertiesDock::PropertiesDock(QWidget *parent)
     layout->setSpacing(0);
     layout->addWidget(mPropertyBrowser);
     layout->addWidget(toolBar);
+
+    setAcceptDrops(true);
+
     widget->setLayout(layout);
 
     setWidget(widget);
@@ -100,6 +103,18 @@ PropertiesDock::PropertiesDock(QWidget *parent)
             this, &PropertiesDock::updateActions);
 
     retranslateUi();
+}
+
+void PropertiesDock::dragEnterEvent(QDragEnterEvent *event) {
+  const auto* mimeData = event->mimeData();
+  if (Utils::isJScriptFile(mimeData)) {
+    event->acceptProposedAction();
+  }
+}
+
+void PropertiesDock::dropEvent(QDropEvent *event) {
+  qDebug() << "[PropertiesDock::dropEvent]";
+  event->accept();
 }
 
 void PropertiesDock::setDocument(Document *document)

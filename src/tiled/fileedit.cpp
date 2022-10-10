@@ -23,6 +23,7 @@
 
 #include "tiled.h"
 #include "projectmanager.h"
+#include "utils.h"
 
 #include <QCompleter>
 #include <QFileDialog>
@@ -115,13 +116,9 @@ void FileEdit::keyReleaseEvent(QKeyEvent *e)
 }
 
 void FileEdit::dragEnterEvent(QDragEnterEvent *event) {
-    const auto mimeData = event->mimeData();
-    if (mimeData->hasUrls()) {
-        auto url = mimeData->urls()[0];
-        QFileInfo fileInfo(url.path());
-        if (fileInfo.completeSuffix() == QStringLiteral("json5")) {
-            event->acceptProposedAction();
-        }
+    const auto* mimeData = event->mimeData();
+    if (Utils::isJScriptFile(mimeData)) {
+      event->acceptProposedAction();
     }
 }
 

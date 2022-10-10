@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #ifdef TILED_ENABLE_DBUS
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -535,6 +536,17 @@ QString Error::jsonParseError(QJsonParseError error)
     return QCoreApplication::translate("File Errors",
                                        "JSON parse error at offset %1:\n%2.").arg(error.offset).arg(error.errorString());
 
+}
+
+bool isJScriptFile(const QMimeData* mimeData) {
+  if (mimeData->hasUrls()) {
+    auto url = mimeData->urls()[0];
+    QFileInfo fileInfo(url.path());
+    if (fileInfo.completeSuffix() == QStringLiteral("json5")) {
+      return true;
+    }
+  }
+  return false;
 }
 
 } // namespace Utils
