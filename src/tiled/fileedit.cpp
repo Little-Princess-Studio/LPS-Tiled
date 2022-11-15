@@ -23,6 +23,7 @@
 
 #include "tiled.h"
 #include "projectmanager.h"
+#include "utils.h"
 
 #include <QCompleter>
 #include <QFileDialog>
@@ -71,8 +72,14 @@ FileEdit::FileEdit(QWidget *parent)
 
 void FileEdit::setFileUrl(const QUrl &url)
 {
-    if (mLineEdit->text() != url.path())
-        mLineEdit->setText(url.path());
+    auto path =
+            Tiled::toUrl(
+                    url.url(QUrl::PreferLocalFile),
+                    QString(),
+                    ProjectManager::instance()->project().fileName())
+                    .url(QUrl::PreferLocalFile);
+    if (mLineEdit->text() != path)
+        mLineEdit->setText(path);
 }
 
 QUrl FileEdit::fileUrl() const
@@ -115,13 +122,9 @@ void FileEdit::keyReleaseEvent(QKeyEvent *e)
 }
 
 void FileEdit::dragEnterEvent(QDragEnterEvent *event) {
-    const auto mimeData = event->mimeData();
-    if (mimeData->hasUrls()) {
-        auto url = mimeData->urls()[0];
-        QFileInfo fileInfo(url.path());
-        if (fileInfo.completeSuffix() == QStringLiteral("json5")) {
-            event->acceptProposedAction();
-        }
+    const auto* mimeData = event->mimeData();
+    if (Utils::isJScriptFile(mimeData)) {
+      event->acceptProposedAction();
     }
 }
 
